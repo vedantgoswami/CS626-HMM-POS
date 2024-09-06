@@ -5,7 +5,7 @@ import seaborn as sn
 import nltk
 from nltk.corpus import brown
 from sklearn.model_selection import KFold
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import confusion_matrix,accuracy_score, precision_score, recall_score, f1_score, fbeta_score
 from collections import defaultdict
 import pickle
 
@@ -117,6 +117,105 @@ def viterbi_backward(best_probs, best_paths, tag_counts):
     
     return pred
 
+def per_pos_metrics(all_true_tags, all_pred_tags):
+    # Per POS Accuracy
+    per_pos_accuracy = {tag: accuracy_score(
+        [t == tag for t in all_true_tags],
+        [p == tag for p in all_pred_tags]
+    ) for tag in tags}
+
+    print("\nPer POS Accuracy:")
+    for tag, acc in per_pos_accuracy.items():
+        print(f"{tag}: {acc:.4f}")
+        
+    # Per POS Percision
+    per_pos_accuracy = {tag: precision_score(
+        [t == tag for t in all_true_tags],
+        [p == tag for p in all_pred_tags],
+    ) for tag in tags}
+
+    print("\nPer POS Percision:")
+    for tag, acc in per_pos_accuracy.items():
+        print(f"{tag}: {acc:.4f}")
+        
+    # Per POS Recall
+    per_pos_accuracy = {tag: recall_score(
+        [t == tag for t in all_true_tags],
+        [p == tag for p in all_pred_tags],average='weighted', zero_division=0
+    ) for tag in tags}
+
+    print("\nPer POS Recall:")
+    for tag, acc in per_pos_accuracy.items():
+        print(f"{tag}: {acc:.4f}")
+        
+    # Per POS F1 score
+    per_pos_accuracy = {tag: f1_score(
+        [t == tag for t in all_true_tags],
+        [p == tag for p in all_pred_tags],average='weighted', zero_division=0
+    ) for tag in tags}
+
+    print("\nPer POS F1 score:")
+    for tag, acc in per_pos_accuracy.items():
+        print(f"{tag}: {acc:.4f}")
+   
+def save_pickles():
+    # Save the components to files
+    with open('vocab.pkl', 'wb') as f:
+        pickle.dump(vocab, f)
+
+    with open('tags.pkl', 'wb') as f:
+        pickle.dump(tags, f)
+
+    with open('initial_probabilities.npy', 'wb') as f:
+        np.save(f, initial_probabilities)
+
+    with open('transition_matrix.npy', 'wb') as f:
+        np.save(f, transition_matrix)
+
+    with open('emission_matrix.npy', 'wb') as f:
+        np.save(f, emission_matrix)
+
+def overall_metric(all_true_tags, all_pred_tags):
+    # Overall Accuracy
+    overall_accuracy = accuracy_score(all_true_tags, all_pred_tags)
+    print(f"\nOverall Accuracy: {overall_accuracy:.4f}")
+
+    # Overall Recall
+    overall_recall = recall_score(all_true_tags, all_pred_tags,average='weighted', zero_division=0)
+    print(f"\nOverall Recall: {overall_recall:.4f}")
+
+    # Overall Precision
+    overall_precision = precision_score(all_true_tags, all_pred_tags,average='weighted', zero_division=0)
+    print(f"\nOverall Precision: {overall_precision:.4f}")
+
+    # Overall F_1 score
+    overall_f_one  = f1_score(all_true_tags, all_pred_tags,average='weighted', zero_division=0)
+    print(f"\nOverall F_1: {overall_f_one:.4f}")
+
+    # Overall F_half score
+    overall_f_half  = fbeta_score(all_true_tags, all_pred_tags, beta=0.5,average='weighted', zero_division=0)
+    print(f"\nOverall F_0.5: {overall_f_half:.4f}")
+
+    # Overall F_Two score
+    overall_f_two  = fbeta_score(all_true_tags, all_pred_tags, beta=2,average='weighted', zero_division=0)
+    print(f"\nOverall F_2: {overall_f_two:.4f}")
+
+    # Confusion Matrix
+    conf_matrix = confusion_matrix(all_true_tags, all_pred_tags, labels=tags)
+    print("\nConfusion Matrix:")
+    print(conf_matrix)
+        
+
+    # Confusion Matrix
+    df_cm = pd.DataFrame(conf_matrix, index=tags, columns=tags)
+    plt.figure(figsize=(10, 7))
+    sn.heatmap(df_cm, annot=True, fmt='d', cmap="YlGnBu")
+    plt.xlabel("Predicted")
+    plt.ylabel("True")
+    plt.title("Confusion Matrix")
+    plt.savefig('/output.png')
+    plt.show()
+    
 # 5-fold Cross-Validation
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
 alpha = 0.002
@@ -168,52 +267,7 @@ for fold, (train_index, test_index) in enumerate(kf.split(sentences)):
     for tag, acc in fold_per_pos_accuracy.items():
         print(f"{tag}: {acc:.4f}")
 
-# Overall Accuracy
-overall_accuracy = accuracy_score(all_true_tags, all_pred_tags)
-print(f"\nOverall Accuracy: {overall_accuracy:.4f}")
 
-# Confusion Matrix
-conf_matrix = confusion_matrix(all_true_tags, all_pred_tags, labels=tags)
-print("\nConfusion Matrix:")
-print(conf_matrix)
-
-# Per POS Accuracy
-per_pos_accuracy = {tag: accuracy_score(
-    [t == tag for t in all_true_tags],
-    [p == tag for p in all_pred_tags]
-) for tag in tags}
-
-print("\nPer POS Accuracy:")
-for tag, acc in per_pos_accuracy.items():
-    print(f"{tag}: {acc:.4f}")
-
-# Confusion Matrix
-df_cm = pd.DataFrame(conf_matrix, index=tags, columns=tags)
-plt.figure(figsize=(10, 7))
-sn.heatmap(df_cm, annot=True, fmt='d', cmap="YlGnBu")
-plt.xlabel("Predicted")
-plt.ylabel("True")
-plt.title("Confusion Matrix")
-plt.savefig('output.png')
-plt.show()
-
-# saving the components 
-import pickle
-
-# Save the components to files
-with open('vocab.pkl', 'wb') as f:
-    pickle.dump(vocab, f)
-
-with open('tags.pkl', 'wb') as f:
-    pickle.dump(tags, f)
-
-with open('initial_probabilities.npy', 'wb') as f:
-    np.save(f, initial_probabilities)
-
-with open('transition_matrix.npy', 'wb') as f:
-    np.save(f, transition_matrix)
-
-with open('emission_matrix.npy', 'wb') as f:
-    np.save(f, emission_matrix)
-
-
+per_pos_metrics(all_true_tags, all_pred_tags)
+overall_metric(all_true_tags, all_pred_tags)
+save_pickles()

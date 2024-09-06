@@ -1,0 +1,195 @@
+[nltk_data] Downloading package brown to
+[nltk_data]     /Users/aakashagarwal/nltk_data...
+[nltk_data]   Package brown is already up-to-date!
+[nltk_data] Downloading package universal_tagset to
+[nltk_data]     /Users/aakashagarwal/nltk_data...
+[nltk_data]   Package universal_tagset is already up-to-date!
+
+Processing Fold 1...
+
+required matrices created...
+Accuracy for Fold 1: 0.9539
+
+Per POS Accuracy for Fold 1:
+.: 0.9982
+ADJ: 0.9875
+ADP: 0.9902
+ADV: 0.9886
+CONJ: 0.9982
+DET: 0.9955
+NOUN: 0.9774
+NUM: 0.9968
+PRON: 0.9969
+PRT: 0.9949
+VERB: 0.9885
+X: 0.9951
+
+Processing Fold 2...
+
+required matrices created...
+Accuracy for Fold 2: 0.9537
+
+Per POS Accuracy for Fold 2:
+.: 0.9980
+ADJ: 0.9878
+ADP: 0.9905
+ADV: 0.9891
+CONJ: 0.9981
+DET: 0.9956
+NOUN: 0.9764
+NUM: 0.9969
+PRON: 0.9969
+PRT: 0.9947
+VERB: 0.9885
+X: 0.9947
+
+Processing Fold 3...
+
+required matrices created...
+Accuracy for Fold 3: 0.9537
+
+Per POS Accuracy for Fold 3:
+.: 0.9979
+ADJ: 0.9878
+ADP: 0.9902
+ADV: 0.9890
+CONJ: 0.9982
+DET: 0.9953
+NOUN: 0.9770
+NUM: 0.9967
+PRON: 0.9967
+PRT: 0.9947
+VERB: 0.9886
+X: 0.9953
+
+Processing Fold 4...
+
+required matrices created...
+Accuracy for Fold 4: 0.9530
+
+Per POS Accuracy for Fold 4:
+.: 0.9980
+ADJ: 0.9882
+ADP: 0.9901
+ADV: 0.9890
+CONJ: 0.9981
+DET: 0.9956
+NOUN: 0.9762
+NUM: 0.9959
+PRON: 0.9969
+PRT: 0.9947
+VERB: 0.9880
+X: 0.9952
+
+Processing Fold 5...
+
+required matrices created...
+Accuracy for Fold 5: 0.9534
+
+Per POS Accuracy for Fold 5:
+.: 0.9982
+ADJ: 0.9876
+ADP: 0.9898
+ADV: 0.9891
+CONJ: 0.9983
+DET: 0.9954
+NOUN: 0.9770
+NUM: 0.9966
+PRON: 0.9969
+PRT: 0.9945
+VERB: 0.9883
+X: 0.9952
+
+Per POS Accuracy:
+.: 0.9981
+ADJ: 0.9878
+ADP: 0.9902
+ADV: 0.9890
+CONJ: 0.9982
+DET: 0.9955
+NOUN: 0.9768
+NUM: 0.9966
+PRON: 0.9969
+PRT: 0.9947
+VERB: 0.9884
+X: 0.9951
+
+Per POS Percision:
+.: 0.9872
+ADJ: 0.9165
+ADP: 0.9542
+ADV: 0.8755
+CONJ: 0.9557
+DET: 0.9755
+NOUN: 0.9723
+NUM: 0.8272
+PRON: 0.9436
+PRT: 0.8884
+VERB: 0.9766
+X: 0.1658
+
+Per POS Recall:
+.: 0.9981
+ADJ: 0.9878
+ADP: 0.9902
+ADV: 0.9890
+CONJ: 0.9982
+DET: 0.9955
+NOUN: 0.9768
+NUM: 0.9966
+PRON: 0.9969
+PRT: 0.9947
+VERB: 0.9884
+X: 0.9951
+
+Per POS F1 score:
+.: 0.9981
+ADJ: 0.9878
+ADP: 0.9902
+ADV: 0.9890
+CONJ: 0.9982
+DET: 0.9955
+NOUN: 0.9766
+NUM: 0.9967
+PRON: 0.9969
+PRT: 0.9947
+VERB: 0.9883
+X: 0.9967
+
+Overall Accuracy: 0.9535
+
+Overall Recall: 0.9535
+
+Overall Precision: 0.9576
+
+Overall F_1: 0.9551
+
+Overall F_0.5: 0.9565
+
+Overall F_2: 0.9539
+
+Confusion Matrix:
+[[147213      0      0      0      0      0      0      0      0      0
+       0    352]
+ [   139  76497    125   2759    341    829   1407    212    104    229
+     455    624]
+ [    20     71 140089   2037    155    137     44      1    297   1712
+      98    105]
+ [    51   2141   1700  50634    157    223    176     39    161    733
+     114    110]
+ [     0      0      8    101  37795     73      2      0      0      0
+       0    172]
+ [     0      0    649     92     31 135155      8      2   1033      1
+       0     48]
+ [  1408   3863    715   1014    559   1213 255895   2404   1026    671
+    3386   3404]
+ [    74     96     32     59     52    226    283  13789     71     11
+      21    160]
+ [     1      1    405      4      0    292     10      4  48594      4
+       3     16]
+ [     1     31   2200    185     24      8    142     13     50  27063
+      35     77]
+ [   195    749    860    941    425    369   5079    184    147     32
+  173422    347]
+ [    22     18     23     10      9     20    131     21     16      5
+      35   1076]]
