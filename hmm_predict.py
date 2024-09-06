@@ -125,7 +125,7 @@ def predict_pos_tags(sentence, vocab, tags, initial_probabilities, transition_ma
 if __name__ == "__main__":
     st.title("Assignment1: HMM-based POS Tagging")
     # user_sentence = "The quick brown fox jumps over the lazy dog"
-    user_sentence = st.text_input("Enter a sentence:", "They refuse to go")
+    user_sentence = st.text_input("Enter a sentence:", "This demo showcases Assignment 1, which focuses on HMM based POS tagging for CS626 course.")
     if st.button("Predict POS Tags"):
         # Preprocess the sentence (e.g., lowercasing and tokenization)
         processed_sentence = user_sentence.lower().split()
