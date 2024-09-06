@@ -1,20 +1,8 @@
 import numpy as np
 import pickle
 import streamlit as st
+import string
 
-
-tag_colors = {
-    "ADJ": "#DB7093",  # Darker Pink
-    "ADP": "#4682B4",  # Darker Blue
-    "CONJ": "#DAA520", # Darker Gold
-    "DET": "#8FBC8F",  # Darker Green
-    "NOUN": "#CD5C5C", # Darker Salmon
-    "NUM": "#BA55D3",  # Darker Orchid
-    "PRON": "#FF4500", # Darker Tomato
-    "PRT": "#708090",  # Slate Gray
-    "VERB": "#4682B4", # Darker Sky Blue
-    "X": "#A9A9A9"     # Darker Gray
-}
 
 # Load the saved components
 with open('vocab.pkl', 'rb') as f:
@@ -32,13 +20,54 @@ with open('transition_matrix.npy', 'rb') as f:
 with open('emission_matrix.npy', 'rb') as f:
     emission_matrix = np.load(f)
 
+tag_colors = {
+    "ADJ": "#DB7093",  # Darker Pink
+    "ADP": "#4682B4",  # Darker Blue
+    "CONJ": "#DAA520", # Darker Gold
+    "DET": "#8FBC8F",  # Darker Green
+    "NOUN": "#CD5C5C", # Darker Salmon
+    "NUM": "#BA55D3",  # Darker Orchid
+    "PRON": "#FF4500", # Darker Tomato
+    "PRT": "#708090",  # Slate Gray
+    "VERB": "#4682B4", # Darker Sky Blue
+    "X": "#A9A9A9"     # Darker Gray
+}
+
+# Punctuation characters
+punct = set(string.punctuation)
+noun_suffix = ["action", "age", "ance", "cy", "dom", "ee", "ence", "er", "hood", "ion", "ism", "ist", "ity", "ling", "ment", "ness", "or", "ry", "scape", "ship", "ty"]
+verb_suffix = ["ate", "ify", "ise", "ize", "ed", "ing"]
+adj_suffix = ["able", "ese", "ful", "i", "ian", "ible", "ic", "ish", "ive", "less", "ous"]
+adv_suffix = ["ward", "wards", "wise", "ly"]
+
+
+def assign_unk(tok):
+    # Digits
+    if any(char.isdigit() for char in tok):
+        return "--unk_digit--"
+    # Punctuation
+    elif any(char in punct for char in tok):
+        return "--unk_punct--"
+    # Nouns
+    elif any(tok.endswith(suffix) for suffix in noun_suffix):
+        return "--unk_noun--"
+    # Verbs
+    elif any(tok.endswith(suffix) for suffix in verb_suffix):
+        return "--unk_verb--"
+    # Adjectives
+    elif any(tok.endswith(suffix) for suffix in adj_suffix):
+        return "--unk_adj--"
+    # Adverbs
+    elif any(tok.endswith(suffix) for suffix in adv_suffix):
+        return "--unk_adv--"
+    return "--unk--"
+
 def initialize(tag_counts, A, B, sentence, vocab):
     best_probs = np.zeros((len(tags), len(sentence)))
     best_paths = np.zeros((len(tags), len(sentence)), dtype=int)
     
     for i, tag in enumerate(tags):
-        word_index = vocab.get(sentence[0][0], vocab["--unk--"])
-        
+        word_index = vocab.get(sentence[0][0], vocab[assign_unk(sentence[0][0])])
         if A[0, i] == 0:
             best_probs[i, 0] = float('-inf')
         else:
@@ -53,7 +82,7 @@ def viterbi_forward(A, B, sentence, best_probs, best_paths, vocab, tag_counts):
             best_path_i = None
             
             word = sentence[i][0]
-            word_index = vocab.get(word, vocab["--unk--"])
+            word_index = vocab.get(word, vocab[assign_unk(word)])
             
             for k, tag_k in enumerate(tags):
                 prob = best_probs[k, i-1] + np.log(A[k, j]) + np.log(B[j][word_index])
@@ -87,7 +116,7 @@ def viterbi_backward(best_probs, best_paths, tag_counts):
     return pred
 
 def predict_pos_tags(sentence, vocab, tags, initial_probabilities, transition_matrix, emission_matrix):
-    sentence = [(word if word in vocab else "--unk--", None) for word in sentence]
+    sentence = [(word if word in vocab else assign_unk(word), None) for word in sentence]
     best_probs, best_paths = initialize(tag_counts=None, A=transition_matrix, B=emission_matrix, sentence=sentence, vocab=vocab)
     best_probs, best_paths = viterbi_forward(transition_matrix, emission_matrix, sentence, best_probs, best_paths, vocab, tag_counts=None)
     pred = viterbi_backward(best_probs, best_paths, tag_counts=None)
