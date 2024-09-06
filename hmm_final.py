@@ -17,6 +17,14 @@ nltk.download('universal_tagset')
 # Load the corpus
 sentences = brown.tagged_sents(tagset='universal')
 
+# Preprocess the sentences (convert words to lowercase)
+preprocessed_sentences = []
+for sentence in sentences:
+    preprocessed_sentence = [(word.lower(), tag) for word, tag in sentence]
+    preprocessed_sentences.append(preprocessed_sentence)
+
+sentences = preprocessed_sentences
+
 words = set()
 vocab = {}
 tags = []
@@ -51,6 +59,7 @@ def assign_unk(tok):
 
 def create_dictionaries(training_corpus):
     global tags  # Ensure tags is accessible globally
+    words = set()
     word_counts = defaultdict(int)  # First pass: count word frequencies
     for sentence in training_corpus:
         for word, tag in sentence:
@@ -65,7 +74,7 @@ def create_dictionaries(training_corpus):
         prev_tag = '^'
         for word, tag in sentence:
             # If word appears less than 2 times, mark it as --unk--
-            if word_counts[word] < 2:
+            if word_counts[word] <= 1:
                 word = assign_unk(word)
             words.add(word)
             emission_counts[(tag, word)] += 1
@@ -182,7 +191,7 @@ def per_pos_metrics(all_true_tags, all_pred_tags):
     # Per POS Recall
     per_pos_recall = {tag: recall_score(
         [t == tag for t in all_true_tags],
-        [p == tag for p in all_pred_tags], average='macro', zero_division=0
+        [p == tag for p in all_pred_tags], average='weighted', zero_division=0
     ) for tag in tags}
 
     print("\nPer POS Recall:")
@@ -192,7 +201,7 @@ def per_pos_metrics(all_true_tags, all_pred_tags):
     # Per POS F1 score
     per_pos_f1 = {tag: f1_score(
         [t == tag for t in all_true_tags],
-        [p == tag for p in all_pred_tags], average='macro', zero_division=0
+        [p == tag for p in all_pred_tags], average='weighted', zero_division=0
     ) for tag in tags}
 
     print("\nPer POS F1 score:")
@@ -222,23 +231,23 @@ def overall_metric(all_true_tags, all_pred_tags):
     print(f"\nOverall Accuracy: {overall_accuracy:.4f}")
 
     # Overall Recall
-    overall_recall = recall_score(all_true_tags, all_pred_tags, average='macro', zero_division=0)
+    overall_recall = recall_score(all_true_tags, all_pred_tags, average='weighted', zero_division=0)
     print(f"\nOverall Recall: {overall_recall:.4f}")
 
     # Overall Precision
-    overall_precision = precision_score(all_true_tags, all_pred_tags, average='macro', zero_division=0)
+    overall_precision = precision_score(all_true_tags, all_pred_tags, average='weighted', zero_division=0)
     print(f"\nOverall Precision: {overall_precision:.4f}")
 
     # Overall F_1 score
-    overall_f_one  = f1_score(all_true_tags, all_pred_tags, average='macro', zero_division=0)
+    overall_f_one  = f1_score(all_true_tags, all_pred_tags, average='weighted', zero_division=0)
     print(f"\nOverall F_1: {overall_f_one:.4f}")
 
     # Overall F_half score
-    overall_f_half  = fbeta_score(all_true_tags, all_pred_tags, beta=0.5, average='macro', zero_division=0)
+    overall_f_half  = fbeta_score(all_true_tags, all_pred_tags, beta=0.5, average='weighted', zero_division=0)
     print(f"\nOverall F_0.5: {overall_f_half:.4f}")
 
     # Overall F_Two score
-    overall_f_two  = fbeta_score(all_true_tags, all_pred_tags, beta=2, average='macro', zero_division=0)
+    overall_f_two  = fbeta_score(all_true_tags, all_pred_tags, beta=2, average='weighted', zero_division=0)
     print(f"\nOverall F_2: {overall_f_two:.4f}")
 
     # Confusion Matrix
@@ -255,20 +264,80 @@ def overall_metric(all_true_tags, all_pred_tags):
     plt.xlabel("Predicted")
     plt.ylabel("True")
     plt.title("Normalized Confusion Matrix")
-    plt.savefig('output_normalized.png')
+    plt.savefig('./results/output_normalized.png')
     plt.show()
 
 def save_wrong_prediction(wrong_predictions, fold):
     # Save wrong predictions to CSV
-    csv_filename = f'./results/wrong_predictions_fold_{fold + 1}.csv'
+    csv_filename = f'./error_analysis/wrong_predictions_fold_{fold + 1}.csv'
     with open(csv_filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow([
-            'Sentence', 'Actual_Sentence_Tag', 'Predicted_Sentence_Tag', 'Actual_Tags', 
-            'Predicted_Tags', 'Actual_Pred_Wrong_tag', 'Num_UNK_Words', 'Num_Wrong_UNK_Predictions'
+            'Sentence', 
+            'Actual_Sentence_Tag', 
+            'Predicted_Sentence_Tag', 
+            'Actual_Tags', 
+            'Predicted_Tags', 
+            'Actual_Pred_Wrong_Tag', 
+            'Num_UNK_Noun', 
+            'Num_Wrong_UNK_Noun', 
+            'Num_UNK_Verb', 
+            'Num_Wrong_UNK_Verb', 
+            'Num_UNK_Adj', 
+            'Num_Wrong_UNK_Adj', 
+            'Num_UNK_Adv', 
+            'Num_Wrong_UNK_Adv', 
+            'Num_UNK_Punct', 
+            'Num_Wrong_UNK_Punct', 
+            'Num_UNK_Digit', 
+            'Num_Wrong_UNK_Digit', 
+            'Num_UNK_General', 
+            'Num_Wrong_UNK_General'
         ])
         writer.writerows(wrong_predictions)
         print(f"\nWrong predictions saved to {csv_filename}")
+
+def count_unk_categories(sentence, vocab):
+    counts = {
+        "--unk_punct--":0,
+        "--unk_digit--":0,
+        "--unk_noun--": 0,
+        "--unk_verb--": 0,
+        "--unk_adj--": 0,
+        "--unk_adv--": 0,
+        "--unk--": 0
+    }
+    
+    for word, tag in sentence:
+        # Check if the word is in the vocabulary
+        if word in counts.keys():
+            unk_category = word
+            if unk_category in counts:
+                counts[unk_category] += 1
+        # If it's in vocab, we do nothing (as it's not considered an unknown)
+    return counts
+
+def count_wrong_unk_categories(sentence, true_tags, pred_tags, vocab):
+    wrong_counts = {
+        "--unk_punct--": 0,
+        "--unk_digit--": 0,
+        "--unk_noun--": 0,
+        "--unk_verb--": 0,
+        "--unk_adj--": 0,
+        "--unk_adv--": 0,
+        "--unk--": 0
+    }
+    
+    for i, (word, tag) in enumerate(sentence):
+        # Check if the word is in the vocabulary
+        if word  in wrong_counts.keys():
+            unk_category = word
+            # Only count as wrong if the true tag doesn't match the predicted tag
+            if unk_category in wrong_counts and true_tags[i] != pred_tags[i]:
+                wrong_counts[unk_category] += 1
+                
+    return wrong_counts
+
 
 # 5-fold Cross-Validation
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
@@ -310,6 +379,7 @@ for fold, (train_index, test_index) in enumerate(kf.split(sentences)):
         fold_pred_tags.extend(pred)
         
         # Check if there are any incorrect predictions in the sentence
+        # Check if there are any incorrect predictions in the sentence
         if true_tags != pred:
             # Format sentence with tags for actual and predicted
             actual_sentence = " ".join([f"{word}" for (word, tag) in sentence])
@@ -325,19 +395,36 @@ for fold, (train_index, test_index) in enumerate(kf.split(sentences)):
             actual_pred_wrong_tag = ", ".join(
                 [f"{true_tags[i]}_{pred[i]}" for i in range(len(true_tags)) if true_tags[i] != pred[i]]
             )
+            # Count the number of each specific type of --unk-- words
+            unk_counts = count_unk_categories(processed_sentence,vocab)
+            # Count the number of wrong predictions for each specific type of --unk-- words
+            wrong_unk_counts = count_wrong_unk_categories(processed_sentence, true_tags, pred,vocab)
             
-            # Count the number of --unk-- words in the sentence
-            num_unk = sum(1 for word, tag in processed_sentence if word == assign_unk(word))
-            
-            # Count the number of wrong predictions specifically where the word was --unk--
-            num_wrong_unk = sum(1 for i, (word, tag) in enumerate(processed_sentence)
-                                if word == assign_unk(word) and true_tags[i] != pred[i])
             
             # Append the wrong prediction details
+            # Append the wrong prediction details
             wrong_predictions.append([
-                actual_sentence, actual_sentence_tag, predicted_sentence_tag, actual_tag, 
-                predicted_tag, actual_pred_wrong_tag, num_unk, num_wrong_unk
-            ])
+                        actual_sentence, 
+                        actual_sentence_tag, 
+                        predicted_sentence_tag, 
+                        actual_tag, 
+                        predicted_tag, 
+                        actual_pred_wrong_tag,
+                        unk_counts['--unk_noun--'],  # UNK Noun Count
+                        wrong_unk_counts['--unk_noun--'],  # Wrong UNK Noun Count
+                        unk_counts['--unk_verb--'],  # UNK Verb Count
+                        wrong_unk_counts['--unk_verb--'],  # Wrong UNK Verb Count
+                        unk_counts['--unk_adj--'],  # UNK Adjective Count
+                        wrong_unk_counts['--unk_adj--'],  # Wrong UNK Adjective Count
+                        unk_counts['--unk_adv--'],  # UNK Adverb Count
+                        wrong_unk_counts['--unk_adv--'],  # Wrong UNK Adverb Count
+                        unk_counts['--unk_punct--'],  # UNK Punctuation Count
+                        wrong_unk_counts['--unk_punct--'],  # Wrong UNK Punctuation Count
+                        unk_counts['--unk_digit--'],  # UNK Digit Count
+                        wrong_unk_counts['--unk_digit--'],  # Wrong UNK Digit Count
+                        unk_counts['--unk--'],  # General UNK Count
+                        wrong_unk_counts['--unk--']  # Wrong General UNK Count
+                    ])
     
     accuracy = accuracy_score(fold_true_tags, fold_pred_tags)
     fold_accuracies.append(accuracy)

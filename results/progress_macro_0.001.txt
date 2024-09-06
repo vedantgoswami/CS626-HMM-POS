@@ -1,0 +1,207 @@
+[nltk_data] Downloading package brown to
+[nltk_data]     /Users/aakashagarwal/nltk_data...
+[nltk_data]   Package brown is already up-to-date!
+[nltk_data] Downloading package universal_tagset to
+[nltk_data]     /Users/aakashagarwal/nltk_data...
+[nltk_data]   Package universal_tagset is already up-to-date!
+
+Processing Fold 1...
+
+Required matrices created...
+Accuracy for Fold 1: 0.9630
+
+Per POS Accuracy for Fold 1:
+.: 0.9999
+ADJ: 0.9855
+ADP: 0.9916
+ADV: 0.9909
+CONJ: 0.9996
+DET: 0.9979
+NOUN: 0.9805
+NUM: 0.9988
+PRON: 0.9983
+PRT: 0.9955
+VERB: 0.9895
+X: 0.9982
+
+Wrong predictions saved to wrong_predictions_fold_1.csv
+
+Processing Fold 2...
+
+Required matrices created...
+Accuracy for Fold 2: 0.9542
+
+Per POS Accuracy for Fold 2:
+.: 0.9987
+ADJ: 0.9855
+ADP: 0.9909
+ADV: 0.9895
+CONJ: 0.9988
+DET: 0.9963
+NOUN: 0.9757
+NUM: 0.9972
+PRON: 0.9972
+PRT: 0.9947
+VERB: 0.9878
+X: 0.9960
+
+Wrong predictions saved to wrong_predictions_fold_2.csv
+
+Processing Fold 3...
+
+Required matrices created...
+Accuracy for Fold 3: 0.9525
+
+Per POS Accuracy for Fold 3:
+.: 0.9984
+ADJ: 0.9857
+ADP: 0.9904
+ADV: 0.9892
+CONJ: 0.9987
+DET: 0.9959
+NOUN: 0.9748
+NUM: 0.9968
+PRON: 0.9970
+PRT: 0.9947
+VERB: 0.9878
+X: 0.9956
+
+Wrong predictions saved to wrong_predictions_fold_3.csv
+
+Processing Fold 4...
+
+Required matrices created...
+Accuracy for Fold 4: 0.9526
+
+Per POS Accuracy for Fold 4:
+.: 0.9985
+ADJ: 0.9857
+ADP: 0.9904
+ADV: 0.9890
+CONJ: 0.9986
+DET: 0.9962
+NOUN: 0.9751
+NUM: 0.9970
+PRON: 0.9971
+PRT: 0.9947
+VERB: 0.9872
+X: 0.9957
+
+Wrong predictions saved to wrong_predictions_fold_4.csv
+
+Processing Fold 5...
+
+Required matrices created...
+Accuracy for Fold 5: 0.9529
+
+Per POS Accuracy for Fold 5:
+.: 0.9987
+ADJ: 0.9856
+ADP: 0.9900
+ADV: 0.9893
+CONJ: 0.9986
+DET: 0.9961
+NOUN: 0.9752
+NUM: 0.9972
+PRON: 0.9970
+PRT: 0.9945
+VERB: 0.9875
+X: 0.9960
+
+Wrong predictions saved to wrong_predictions_fold_5.csv
+
+Per POS Accuracy:
+.: 0.9989
+ADJ: 0.9856
+ADP: 0.9907
+ADV: 0.9896
+CONJ: 0.9989
+DET: 0.9965
+NOUN: 0.9763
+NUM: 0.9974
+PRON: 0.9973
+PRT: 0.9948
+VERB: 0.9880
+X: 0.9963
+
+Per POS Precision:
+.: 0.9924
+ADJ: 0.8979
+ADP: 0.9576
+ADV: 0.8857
+CONJ: 0.9728
+DET: 0.9838
+NOUN: 0.9602
+NUM: 0.8653
+PRON: 0.9539
+PRT: 0.8951
+VERB: 0.9760
+X: 0.1883
+
+Per POS Recall:
+.: 0.9988
+ADJ: 0.9476
+ADP: 0.9809
+ADV: 0.9474
+CONJ: 0.9961
+DET: 0.9921
+NOUN: 0.9634
+NUM: 0.9720
+PRON: 0.9910
+PRT: 0.9505
+VERB: 0.9713
+X: 0.8144
+
+Per POS F1 score:
+.: 0.9974
+ADJ: 0.9464
+ADP: 0.9787
+ADV: 0.9438
+CONJ: 0.9911
+DET: 0.9916
+NOUN: 0.9669
+NUM: 0.9512
+PRON: 0.9837
+PRT: 0.9484
+VERB: 0.9770
+X: 0.6442
+
+Overall Accuracy: 0.9550
+
+Overall Recall: 0.9251
+
+Overall Precision: 0.8774
+
+Overall F_1: 0.8910
+
+Overall F_0.5: 0.8820
+
+Overall F_2: 0.9060
+
+Confusion Matrix:
+[[147363      0      0      0      0      1      0      0      0      1
+       0    200]
+ [    70  75613     94   2659    131    401   3330    164     41    213
+     619    386]
+ [    20     75 140124   2031    153    129     68      1    302   1669
+     115     79]
+ [    37   2147   1696  50658    120    212    307     24    117    723
+     128     70]
+ [     0      0      9    102  37886     70      3      0      0      1
+       0     80]
+ [     0      3    650     89     27 135157     23      2   1023      1
+       2     42]
+ [   823   4979    408    695    306    760 258698   1868    714    516
+    3320   2471]
+ [    36    123     20     19     17     81    363  14069     30      4
+       4    108]
+ [     0      1    423      4      3    297     23      0  48552      6
+       3     22]
+ [     1     37   2247    183      6      4    294      0     20  26959
+      40     38]
+ [   120   1198    636    747    290    240   5958    124     92     25
+  173040    280]
+ [    18     39     22      7      6     25    345      8      8      2
+      30    876]]
+2024-09-07 01:43:27.994 python[73133:44305305] +[IMKClient subclass]: chose IMKClient_Legacy
+2024-09-07 01:43:27.994 python[73133:44305305] +[IMKInputSession subclass]: chose IMKInputSession_Legacy

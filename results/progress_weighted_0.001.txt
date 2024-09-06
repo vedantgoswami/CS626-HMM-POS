@@ -1,0 +1,207 @@
+[nltk_data] Downloading package brown to
+[nltk_data]     /Users/aakashagarwal/nltk_data...
+[nltk_data]   Package brown is already up-to-date!
+[nltk_data] Downloading package universal_tagset to
+[nltk_data]     /Users/aakashagarwal/nltk_data...
+[nltk_data]   Package universal_tagset is already up-to-date!
+
+Processing Fold 1...
+
+Required matrices created...
+Accuracy for Fold 1: 0.9633
+
+Per POS Accuracy for Fold 1:
+.: 0.9999
+ADJ: 0.9859
+ADP: 0.9914
+ADV: 0.9907
+CONJ: 0.9996
+DET: 0.9977
+NOUN: 0.9811
+NUM: 0.9988
+PRON: 0.9982
+PRT: 0.9954
+VERB: 0.9896
+X: 0.9985
+
+Wrong predictions saved to ./results/wrong_predictions_fold_1.csv
+
+Processing Fold 2...
+
+Required matrices created...
+Accuracy for Fold 2: 0.9555
+
+Per POS Accuracy for Fold 2:
+.: 0.9989
+ADJ: 0.9860
+ADP: 0.9907
+ADV: 0.9895
+CONJ: 0.9989
+DET: 0.9963
+NOUN: 0.9767
+NUM: 0.9974
+PRON: 0.9974
+PRT: 0.9946
+VERB: 0.9880
+X: 0.9966
+
+Wrong predictions saved to ./results/wrong_predictions_fold_2.csv
+
+Processing Fold 3...
+
+Required matrices created...
+Accuracy for Fold 3: 0.9541
+
+Per POS Accuracy for Fold 3:
+.: 0.9986
+ADJ: 0.9862
+ADP: 0.9903
+ADV: 0.9892
+CONJ: 0.9988
+DET: 0.9960
+NOUN: 0.9758
+NUM: 0.9970
+PRON: 0.9974
+PRT: 0.9945
+VERB: 0.9882
+X: 0.9962
+
+Wrong predictions saved to ./results/wrong_predictions_fold_3.csv
+
+Processing Fold 4...
+
+Required matrices created...
+Accuracy for Fold 4: 0.9540
+
+Per POS Accuracy for Fold 4:
+.: 0.9987
+ADJ: 0.9860
+ADP: 0.9903
+ADV: 0.9889
+CONJ: 0.9987
+DET: 0.9964
+NOUN: 0.9761
+NUM: 0.9972
+PRON: 0.9974
+PRT: 0.9945
+VERB: 0.9874
+X: 0.9962
+
+Wrong predictions saved to ./results/wrong_predictions_fold_4.csv
+
+Processing Fold 5...
+
+Required matrices created...
+Accuracy for Fold 5: 0.9544
+
+Per POS Accuracy for Fold 5:
+.: 0.9988
+ADJ: 0.9859
+ADP: 0.9900
+ADV: 0.9893
+CONJ: 0.9988
+DET: 0.9962
+NOUN: 0.9762
+NUM: 0.9973
+PRON: 0.9973
+PRT: 0.9944
+VERB: 0.9879
+X: 0.9966
+
+Wrong predictions saved to ./results/wrong_predictions_fold_5.csv
+
+Per POS Accuracy:
+.: 0.9990
+ADJ: 0.9860
+ADP: 0.9905
+ADV: 0.9895
+CONJ: 0.9990
+DET: 0.9965
+NOUN: 0.9772
+NUM: 0.9976
+PRON: 0.9975
+PRT: 0.9947
+VERB: 0.9882
+X: 0.9968
+
+Per POS Precision:
+.: 0.9931
+ADJ: 0.8986
+ADP: 0.9579
+ADV: 0.8853
+CONJ: 0.9763
+DET: 0.9837
+NOUN: 0.9613
+NUM: 0.8717
+PRON: 0.9592
+PRT: 0.8929
+VERB: 0.9756
+X: 0.2169
+
+Per POS Recall:
+.: 0.9990
+ADJ: 0.9860
+ADP: 0.9905
+ADV: 0.9895
+CONJ: 0.9990
+DET: 0.9965
+NOUN: 0.9772
+NUM: 0.9976
+PRON: 0.9975
+PRT: 0.9947
+VERB: 0.9882
+X: 0.9968
+
+Per POS F1 score:
+.: 0.9990
+ADJ: 0.9860
+ADP: 0.9906
+ADV: 0.9896
+CONJ: 0.9990
+DET: 0.9965
+NOUN: 0.9771
+NUM: 0.9976
+PRON: 0.9976
+PRT: 0.9947
+VERB: 0.9882
+X: 0.9976
+
+Overall Accuracy: 0.9563
+
+Overall Recall: 0.9563
+
+Overall Precision: 0.9582
+
+Overall F_1: 0.9570
+
+Overall F_0.5: 0.9577
+
+Overall F_2: 0.9565
+
+Confusion Matrix:
+[[147391      0      0      0      0      1      0      0      0      1
+       0    172]
+ [    69  76039     95   2710    120    315   3088    162     17    212
+     604    290]
+ [    20     73 139945   2004    152    307     65      1    309   1710
+     108     72]
+ [    32   2184   1729  50643    104    212    292     20     73    775
+     119     56]
+ [     0      0     12    128  37862     75      2      0      0      1
+       0     71]
+ [     0      3    586    104     25 135202     15      2   1044      1
+       2     35]
+ [   732   5024    390    626    252    747 259484   1768    528    485
+    3425   2097]
+ [    31    107     18     19     18     74    344  14127     29      4
+       4     99]
+ [     0      1    427      3      0    297     31      0  48547      6
+       3     19]
+ [     0     32   2280    272      4      5    285      0     18  26863
+      42     28]
+ [   119   1113    599    690    238    183   5977    118     41     24
+  173424    224]
+ [    20     41     20      8      7     24    340      8      8      3
+      31    876]]
+2024-09-07 03:06:51.659 python[11929:44468570] +[IMKClient subclass]: chose IMKClient_Legacy
+2024-09-07 03:06:51.659 python[11929:44468570] +[IMKInputSession subclass]: chose IMKInputSession_Legacy
