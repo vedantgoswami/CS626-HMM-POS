@@ -5,20 +5,21 @@ import string
 
 
 # Load the saved components
-with open('vocab.pkl', 'rb') as f:
+with open('pickle_files_backup/vocab.pkl', 'rb') as f:
     vocab = pickle.load(f)
 
-with open('tags.pkl', 'rb') as f:
+with open('pickle_files_backup/tags.pkl', 'rb') as f:
     tags = pickle.load(f)
 
-with open('initial_probabilities.npy', 'rb') as f:
+with open('pickle_files_backup/initial_probabilities.npy', 'rb') as f:
     initial_probabilities = np.load(f)
 
-with open('transition_matrix.npy', 'rb') as f:
+with open('pickle_files_backup/transition_matrix.npy', 'rb') as f:
     transition_matrix = np.load(f)
 
-with open('emission_matrix.npy', 'rb') as f:
+with open('pickle_files_backup/emission_matrix.npy', 'rb') as f:
     emission_matrix = np.load(f)
+
 
 tag_colors = {
     "ADJ": "#DB7093",  # Darker Pink
