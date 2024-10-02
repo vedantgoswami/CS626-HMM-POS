@@ -1,0 +1,96 @@
+[nltk_data] Downloading package brown to
+[nltk_data]     /Users/aakashagarwal/nltk_data...
+[nltk_data]   Package brown is already up-to-date!
+[nltk_data] Downloading package universal_tagset to
+[nltk_data]     /Users/aakashagarwal/nltk_data...
+[nltk_data]   Package universal_tagset is already up-to-date!
+Fold 1 Results:
+Accuracy: 0.9751397986898865
+Precision: 0.9749851863338764
+Recall: 0.9751397986898865
+F1 Score: 0.9750348401664855
+F-beta Score (beta=0.5): 0.9749960203058101
+
+
+Fold 2 Results:
+Accuracy: 0.9742978272390037
+Precision: 0.9741695239219118
+Recall: 0.9742978272390037
+F1 Score: 0.9741847903248434
+F-beta Score (beta=0.5): 0.9741597033817453
+
+
+Fold 3 Results:
+Accuracy: 0.9775467121318001
+Precision: 0.977440821909304
+Recall: 0.9775467121318001
+F1 Score: 0.9773372948923505
+F-beta Score (beta=0.5): 0.9773353745167411
+
+
+Fold 4 Results:
+Accuracy: 0.9770687213298594
+Precision: 0.9768201607871373
+Recall: 0.9770687213298594
+F1 Score: 0.9768269029413517
+F-beta Score (beta=0.5): 0.9767695494372657
+
+
+Fold 5 Results:
+Accuracy: 0.973136285018673
+Precision: 0.972933327324483
+Recall: 0.973136285018673
+F1 Score: 0.9729455859355325
+F-beta Score (beta=0.5): 0.9729027651780788
+
+
+Average Accuracy:  0.9754378688818445
+Average Precision:  0.9752698040553426
+Average Recall:  0.9754378688818445
+Average F1 Score:  0.9752658828521126
+Average F-beta Score (beta=0.5):  0.9752326825639281
+Confusion Matrix:
+ [[147558      1      2      0      0      0      0      0      0      1
+       0      3]
+ [     0  77631     84   1562      0      2   3516     29      1     49
+     835     12]
+ [    20     52 142165    665     96    274     85      1     91   1216
+      96      5]
+ [     0   1630   1193  52346     95    166    420      0      9    313
+      66      1]
+ [     0      1     20     62  38023     36      2      0      1      0
+       5      1]
+ [     0      7    293    107     28 136258     33      3    280      4
+       0      6]
+ [     3   3335     99    353      2     36 268496    268     30    141
+    2649    146]
+ [     0     57      1      3      0      0    151  14657      0      0
+       4      1]
+ [     0      1    241      4      0    328     41      0  48703     12
+       2      2]
+ [     0     33   1243    187      0      2    247      0      3  28061
+      47      6]
+ [     0    518    150    145      0      0   3465      2      1     35
+  178414     20]
+ [    24     33     36      6      4     18    708      9      6      4
+      42    496]]
+Classification Report:
+               precision    recall  f1-score   support
+
+           .       1.00      1.00      1.00    147565
+         ADJ       0.93      0.93      0.93     83721
+         ADP       0.98      0.98      0.98    144766
+         ADV       0.94      0.93      0.94     56239
+        CONJ       0.99      1.00      1.00     38151
+         DET       0.99      0.99      0.99    137019
+        NOUN       0.97      0.97      0.97    275558
+         NUM       0.98      0.99      0.98     14874
+        PRON       0.99      0.99      0.99     49334
+         PRT       0.94      0.94      0.94     29829
+        VERB       0.98      0.98      0.98    182750
+           X       0.71      0.36      0.48      1386
+
+    accuracy                           0.98   1161192
+   macro avg       0.95      0.92      0.93   1161192
+weighted avg       0.98      0.98      0.98   1161192
+
